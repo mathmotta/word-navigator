@@ -1,7 +1,6 @@
 ﻿using BluePrism.WordNavigator.Common.Concurrent;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Common.Extensions
 {
@@ -15,6 +14,14 @@ namespace BluePrism.WordNavigator.Common.Extensions
                 hashSet.Add(element);
             }
             return hashSet;
+        }
+
+        public static async IAsyncEnumerable<TSource> ToAsyncEnumerable<TSource>(this IEnumerable<TSource> source)
+        {
+            foreach (var element in source)
+            {
+                yield return await Task.FromResult(element);
+            }
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using BluePrism.WordNavigator.Common.Extensions;
-
+using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Common.Tests.Extensions
 {
@@ -17,6 +15,26 @@ namespace BluePrism.WordNavigator.Common.Tests.Extensions
             var result = enumerable.ToConcurrentHashSet();
 
             Assert.IsTrue(result.Contains(1));
+        }
+
+        [Test]
+        public async Task ToAsyncEnumerable_Success()
+        {
+            var enumerable = new List<int>();
+            enumerable.Add(1);
+            var transformed = enumerable.ToAsyncEnumerable();
+
+            bool result = false;
+            await foreach (var item in transformed)
+            {
+                if(item == 1)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(result);
         }
     }
 }
