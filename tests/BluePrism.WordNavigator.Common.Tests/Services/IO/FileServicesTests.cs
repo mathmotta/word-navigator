@@ -1,3 +1,4 @@
+using BluePrism.WordNavigator.Common.Services.IO;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

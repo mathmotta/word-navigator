@@ -15,7 +15,7 @@ namespace BluePrism.WordNavigator.Common.Tests
         [Test]
         public void ReadContent_ReturnLines_Success()
         {
-            var mockLogger = new Mock<ILogger<FileService>>();
+            var mockLogger = new Mock<ILogger<OnDemandFileService>>();
             var fileService = new OnDemandFileService(mockLogger.Object);
             IEnumerable<string> result = fileService.ReadContent(@"Resources\words-english.txt");
             Assert.IsTrue(result.Count().Equals(26880));
@@ -24,7 +24,7 @@ namespace BluePrism.WordNavigator.Common.Tests
         [Test]
         public void ReadContent_ReturnLines_FailNullPath()
         {
-            var mockLogger = new Mock<ILogger<FileService>>();
+            var mockLogger = new Mock<ILogger<OnDemandFileService>>();
             var fileService = new OnDemandFileService(mockLogger.Object);
             Assert.Throws<ArgumentNullException>(() => fileService.ReadContent(null));
         }
@@ -32,7 +32,7 @@ namespace BluePrism.WordNavigator.Common.Tests
         [Test]
         public void ReadContent_ReturnLines_FailEmptyPath()
         {
-            var mockLogger = new Mock<ILogger<FileService>>();
+            var mockLogger = new Mock<ILogger<OnDemandFileService>>();
             var fileService = new OnDemandFileService(mockLogger.Object);
             Assert.Throws<ArgumentNullException>(() => fileService.ReadContent(string.Empty));
         }
@@ -40,7 +40,7 @@ namespace BluePrism.WordNavigator.Common.Tests
         [Test]
         public void ReadContent_ReturnLines_FailFileNotFound()
         {
-            var mockLogger = new Mock<ILogger<FileService>>();
+            var mockLogger = new Mock<ILogger<OnDemandFileService>>();
             var fileService = new OnDemandFileService(mockLogger.Object);
             Assert.Throws<FileNotFoundException>(() => fileService.ReadContent(@"Resources\non-existent.txt"));
         }
@@ -48,7 +48,7 @@ namespace BluePrism.WordNavigator.Common.Tests
         [Test]
         public async Task ReadContentAsync_ReturnLines_Success()
         {
-            var mockLogger = new Mock<ILogger<FileService>>();
+            var mockLogger = new Mock<ILogger<OnDemandFileService>>();
             var fileService = new OnDemandFileService(mockLogger.Object);
             IAsyncEnumerable<string> result = fileService.ReadContentAsync(@"Resources\words-english.txt");
 
