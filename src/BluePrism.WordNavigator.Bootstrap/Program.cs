@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using BluePrism.WordNavigator.Common;
+using BluePrism.WordNavigator.Common.Services.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -20,13 +22,24 @@ namespace BluePrism.WordNavigator.Bootstrap
                 .WriteTo.Console()
                 .CreateLogger();
 
+            var fileService = builder.Build().GetSection("FileManagementService").Value;
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
                     services.AddTransient<IEntrypointService, EntrypointService>();
+                    switch (fileService)
+                    {
+                        case "OnDemandFileService":
+                            services.AddTransient<IFileManagementService, OnDemandFileService>();
+                            break;
+                        default:
+                            services.AddTransient<IFileManagementService, FileService>();
+                            break;
+                    }
+                    
                 }).UseSerilog()
                 .Build();
-
+            
             var entrypoint = ActivatorUtilities.CreateInstance<EntrypointService>(host.Services);
             entrypoint.Execute(args);
         }
