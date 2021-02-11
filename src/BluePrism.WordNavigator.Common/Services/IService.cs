@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BluePrism.WordNavigator.Common.Services
+﻿namespace BluePrism.WordNavigator.Common.Services
 {
+    /// <summary>
+    /// Exposes the generic service that provides general functionality to any service type.
+    /// </summary>
     public interface IService
     {
     }

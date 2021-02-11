@@ -1,10 +1,10 @@
 ﻿using CommandLine;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BluePrism.WordNavigator.Bootstrap.Command
 {
+    /// <summary>
+    /// Options to be used as argument options to run the application.
+    /// </summary>
     class Options
     {
         [Value(0, MetaName = "Start word", HelpText = "The word to start the search")]
