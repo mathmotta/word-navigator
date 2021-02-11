@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BluePrism.WordNavigator.Common.Concurrent;
+using BluePrism.WordNavigator.Common.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Core
 {
@@ -13,7 +16,23 @@ namespace BluePrism.WordNavigator.Core
             _log = log;
         }
 
-        public ICollection<string> Seek(string start, string target, IEnumerable<string> lists)
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source)
+        {
+            ConcurrentHashSet<string> notKnown = source.ToConcurrentHashSet();
+            notKnown.Remove(start);
+
+            return await Seek(start, target, notKnown);
+        }
+
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source)
+        {
+            ConcurrentHashSet<string> notKnown = await source.ToConcurrentHashSet();
+            notKnown.Remove(start);
+
+            return await Seek(start, target, notKnown);
+        }
+
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> notKnown)
         {
             throw new NotImplementedException();
         }

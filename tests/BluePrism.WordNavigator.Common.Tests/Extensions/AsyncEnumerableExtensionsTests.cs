@@ -1,9 +1,6 @@
-﻿using BluePrism.WordNavigator.Common.Concurrent;
-using BluePrism.WordNavigator.Common.Extensions;
+﻿using BluePrism.WordNavigator.Common.Extensions;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Common.Tests.Extensions

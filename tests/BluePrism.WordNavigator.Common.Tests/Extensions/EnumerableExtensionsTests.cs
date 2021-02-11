@@ -10,8 +10,7 @@ namespace BluePrism.WordNavigator.Common.Tests.Extensions
         [Test]
         public void ToConcurrentHashSet_Success()
         {
-            var enumerable = new List<int>();
-            enumerable.Add(1);
+            var enumerable = new List<int>() { 1 };
             var result = enumerable.ToConcurrentHashSet();
 
             Assert.IsTrue(result.Contains(1));
@@ -20,8 +19,7 @@ namespace BluePrism.WordNavigator.Common.Tests.Extensions
         [Test]
         public async Task ToAsyncEnumerable_Success()
         {
-            var enumerable = new List<int>();
-            enumerable.Add(1);
+            var enumerable = new List<int>() { 1 };
             var transformed = enumerable.ToAsyncEnumerable();
 
             bool result = false;
