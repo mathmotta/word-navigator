@@ -20,8 +20,6 @@ namespace BluePrism.WordNavigator.Bootstrap
                 .WriteTo.Console()
                 .CreateLogger();
 
-            Log.Logger.Information("Loading Word Navigator...");
-
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {

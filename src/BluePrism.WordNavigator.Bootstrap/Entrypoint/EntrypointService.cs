@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using BluePrism.WordNavigator.Bootstrap.Command;
+using CommandLine;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace BluePrism.WordNavigator.Bootstrap
@@ -14,9 +16,17 @@ namespace BluePrism.WordNavigator.Bootstrap
             _config = config;
         }
 
-        public void Execute(string[] args)
+        public async void Execute(string[] args)
         {
-
+            //Parser.Default.ParseArguments<Options>(args)
+            //    .WithParsedAsync<Options>(o =>
+            //    {
+            //        return Task.;
+            //    })
+            //    .WithNotParsedAsync<Options>(o =>
+            //    {
+            //        return;
+            //    });
         }
     }
 }
