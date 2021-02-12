@@ -16,8 +16,4 @@
 		<ProjectReference Include="..\BluePrism.WordNavigator.Common\BluePrism.WordNavigator.Common.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="DTO\" />
-	</ItemGroup>
-
 </Project>

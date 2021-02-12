@@ -28,8 +28,8 @@ namespace BluePrism.WordNavigator.Core.Tests.Navigation
         [Test]
         public async Task IntegrationTest_Same_To_Cost()
         {
-            var start = "same";
-            var target = "cost";
+            var start = "spin";
+            var target = "spot";
             IAsyncEnumerable<string> source = _fileService.ReadContentAsync(@"Resources\words-english.txt");
 
             ICollection<ICollection<string>> result = await _wordNavigationService.Seek(start, target, source);

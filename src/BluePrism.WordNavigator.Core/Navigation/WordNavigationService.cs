@@ -1,7 +1,6 @@
 ﻿using BluePrism.WordNavigator.Common.Concurrent;
 using BluePrism.WordNavigator.Common.Extensions;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
