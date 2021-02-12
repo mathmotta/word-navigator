@@ -1,8 +1,6 @@
 ﻿using BluePrism.WordNavigator.Core.DTO;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BluePrism.WordNavigator.Core.Tests.DTO
 {
