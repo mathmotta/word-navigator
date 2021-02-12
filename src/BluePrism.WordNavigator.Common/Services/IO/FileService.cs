@@ -39,7 +39,7 @@ namespace BluePrism.WordNavigator.Common.Services.IO
         {
             if (path == null || string.IsNullOrEmpty(path))
                 throw new ArgumentNullException("Path to file is null or empty");
-            _log.LogDebug("Reading file {filePath}", path);
+            _log.LogDebug("Reading file {path}", path);
             return File.ReadAllLines(path);
 
         }
@@ -55,9 +55,9 @@ namespace BluePrism.WordNavigator.Common.Services.IO
             if (path == null || string.IsNullOrEmpty(path))
                 throw new ArgumentNullException("Path to file is null or empty");
 
-            _log.LogDebug("Reading file {filePath}", path);
+            _log.LogDebug("Reading file {path}", path);
             var lines = await File.ReadAllLinesAsync(path);
-            _log.LogDebug("Making AsyncEnumerable");
+            _log.LogDebug("Making AsyncEnumerable from result");
             foreach (var line in lines)
             {
                 yield return await Task.FromResult(line);
