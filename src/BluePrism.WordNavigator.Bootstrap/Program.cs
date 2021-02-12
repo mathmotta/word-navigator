@@ -1,6 +1,5 @@
 ﻿using BluePrism.WordNavigator.Common;
 using BluePrism.WordNavigator.Common.Services.IO;
-using BluePrism.WordNavigator.Core;
 using BluePrism.WordNavigator.Core.Navigation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +26,7 @@ namespace BluePrism.WordNavigator.Bootstrap
                 .CreateLogger();
 
             var fileServiceDependency = builder.Build().GetSection("FileManagementService").Value;
+            var navigationServiceDependency = builder.Build().GetSection("NavigationService").Value;
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
@@ -41,7 +41,12 @@ namespace BluePrism.WordNavigator.Bootstrap
                             break;
                     }
                     services.AddTransient<IFileNavigationService, FileNavigationService>();
-                    services.AddTransient<IWordNavigationService, WordNavigationService>();
+                    switch (navigationServiceDependency)
+                    {
+                        default:
+                            services.AddTransient<IWordNavigationService, WordNavigationService>();
+                            break;
+                    }
 
                 }).UseSerilog()
                 .Build();
@@ -56,8 +61,6 @@ namespace BluePrism.WordNavigator.Bootstrap
                 cancellationToken.Cancel();
                 eventArgs.Cancel = true;
             };
-
-            args = new string[] { "fool", "sage", "-d", @"Resources\words-english.txt", "-o", @"C:\Users\mathewsmotta\Documents\WordNavigatorResults\resultpaths.txt" };
 
             // Starts the application
             await entrypoint.Execute(args, cancellationToken.Token);

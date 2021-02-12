@@ -393,26 +393,5 @@ namespace BluePrism.WordNavigator.Core.Tests
             Assert.IsTrue(researchResult.Count == 1);
             Assert.IsTrue(researchResult.First().Count == 5);
         }
-
-
-        [Test]
-        public async Task Seek_IAsyncEnumerableasd_Success()
-        {
-            var source = new List<string>() { "cost", "came", "same", "cast", "case" };
-            var start = "same";
-            var target = "cost";
-
-            ICollection<string> expectedResult = new List<string>() { "same", "came", "case", "cast", "cost" };
-
-
-            //IEnumerable<string> source = File.ReadAllLines(@"Resources\words-english.txt");
-
-            
-            ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source);
-
-
-            Assert.IsTrue(expectedResult.Count == 5);
-            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None), Times.Once);
-        }
     }
 }

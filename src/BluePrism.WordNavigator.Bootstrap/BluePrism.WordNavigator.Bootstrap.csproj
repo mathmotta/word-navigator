@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>BluePrism.WordNavigator.Bootstrap.Program</StartupObject>
 	<AssemblyVersion>1.0</AssemblyVersion>
+	<AssemblyName>WordNavigator</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
