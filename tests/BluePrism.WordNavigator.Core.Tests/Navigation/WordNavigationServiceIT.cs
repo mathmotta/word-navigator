@@ -1,9 +1,11 @@
 ﻿using BluePrism.WordNavigator.Common.Services.IO;
+using BluePrism.WordNavigator.Core.Navigation;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Core.Tests.Navigation
@@ -30,7 +32,7 @@ namespace BluePrism.WordNavigator.Core.Tests.Navigation
             var target = "cost";
             IAsyncEnumerable<string> source = _fileService.ReadContentAsync(@"Resources\words-english.txt");
 
-            ICollection<ICollection<string>> result = await _wordNavigationService.Seek(start, target, source);
+            ICollection<ICollection<string>> result = await _wordNavigationService.Seek(start, target, source, CancellationToken.None);
 
             Assert.IsTrue(result.Count == 1);
             Assert.IsTrue(result.First().Count == 5);

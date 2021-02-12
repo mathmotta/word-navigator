@@ -9,6 +9,8 @@ using BluePrism.WordNavigator.Common.Extensions;
 using System.Collections.Concurrent;
 using System;
 using System.IO;
+using BluePrism.WordNavigator.Core.Navigation;
+using System.Threading;
 
 namespace BluePrism.WordNavigator.Core.Tests
 {
@@ -36,13 +38,13 @@ namespace BluePrism.WordNavigator.Core.Tests
             expectedResult.Add(path);
 
 
-            _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>()).Result).Returns(expectedResult);
+            _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None).Result).Returns(expectedResult);
             ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source);
 
 
             Assert.IsTrue(expectedResult.Count == 1);
             Assert.IsTrue(expectedResult.First().Count == 5);
-            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>()), Times.Once);
+            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None), Times.Once);
         }
 
         [Test]
@@ -57,13 +59,13 @@ namespace BluePrism.WordNavigator.Core.Tests
             expectedResult.Add(path);
 
 
-            _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>()).Result).Returns(expectedResult);
+            _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None).Result).Returns(expectedResult);
             ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source.ToAsyncEnumerable());
 
 
             Assert.IsTrue(expectedResult.Count == 1);
             Assert.IsTrue(expectedResult.First().Count == 5);
-            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>()), Times.Once);
+            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None), Times.Once);
         }
 
         [Test]
@@ -76,7 +78,8 @@ namespace BluePrism.WordNavigator.Core.Tests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<ConcurrentHashSet<string>>(),
-                It.IsAny<ConcurrentDictionary<string, ICollection<string>>>()).Result)
+                It.IsAny<ConcurrentDictionary<string, ICollection<string>>>(),
+                CancellationToken.None).Result)
                 .Returns(true);
             _wordNavigationService.Setup(w => w.SeekAllShortestPaths(
                 It.IsAny<string>(),
@@ -105,7 +108,8 @@ namespace BluePrism.WordNavigator.Core.Tests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<ConcurrentHashSet<string>>(),
-                It.IsAny<ConcurrentDictionary<string, ICollection<string>>>()).Result)
+                It.IsAny<ConcurrentDictionary<string, ICollection<string>>>(), 
+                CancellationToken.None).Result)
                 .Returns(false);
             _wordNavigationService.Setup(w => w.SeekAllShortestPaths(
                 It.IsAny<string>(),
@@ -408,7 +412,7 @@ namespace BluePrism.WordNavigator.Core.Tests
 
 
             Assert.IsTrue(expectedResult.Count == 5);
-            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>()), Times.Once);
+            _wordNavigationService.Verify(m => m.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None), Times.Once);
         }
     }
 }

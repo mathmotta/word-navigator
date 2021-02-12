@@ -4,9 +4,10 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace BluePrism.WordNavigator.Core
+namespace BluePrism.WordNavigator.Core.Navigation
 {
     public class WordNavigationService : IWordNavigationService
     {
@@ -17,19 +18,19 @@ namespace BluePrism.WordNavigator.Core
             _log = log;
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source)
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default)
         {
             ConcurrentHashSet<string> notKnown = source.ToConcurrentHashSet();
-            return await Seek(start, target, notKnown);
+            return await Seek(start, target, notKnown, cancellationToken);
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source)
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default)
         {
             ConcurrentHashSet<string> notKnown = await source.ToConcurrentHashSet();
-            return await Seek(start, target, notKnown);
+            return await Seek(start, target, notKnown, cancellationToken);
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source)
+        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default)
         {
             source.Remove(start);
 
@@ -57,13 +58,14 @@ namespace BluePrism.WordNavigator.Core
         /// <param name="target">The target string to find</param>
         /// <param name="source">The allowed contents that the search can be done at</param>
         /// <param name="similarityGroups">The similarity groups that were already found</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>True if the target is found</returns>
-        public virtual async Task<bool> SeekTarget(string start, string target, ConcurrentHashSet<string> source, ConcurrentDictionary<string, ICollection<string>> similarityGroups)
+        public virtual async Task<bool> SeekTarget(string start, string target, ConcurrentHashSet<string> source, ConcurrentDictionary<string, ICollection<string>> similarityGroups, CancellationToken cancellationToken = default)
         {
             var pathsContent = new List<string>();
             pathsContent.Add(start);
             var foundTarget = false;
-            while (pathsContent.Any() && !foundTarget)
+            while (pathsContent.Any() && !foundTarget && !cancellationToken.IsCancellationRequested)
             {
                 var alreadyKnown = new ConcurrentHashSet<string>();
                 var tasks = new List<Task<bool>>();
@@ -139,7 +141,7 @@ namespace BluePrism.WordNavigator.Core
                 string similarity = SubstituteLetter(group, index, k);
                 if (!source.Contains(similarity))
                 {
-                    _log.LogDebug("Similarity {similarity} does not exist in source, skipping.", similarity);
+                    _log.LogTrace("Similarity {similarity} does not exist in source, skipping.", similarity);
                     continue;
                 }
                 _log.LogDebug("Adding similarity {similarity} to the list of known elements.", similarity);
