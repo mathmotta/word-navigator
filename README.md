@@ -145,10 +145,10 @@ Factory is indirectly used with Microsoft's dependency injection framework as we
 # References
 
 
-https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8
-https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/default-interface-methods-versions
-https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-https://en.wikipedia.org/wiki/Breadth-first_search
-https://github.com/dotnet/runtime/issues/2214
-https://stackoverflow.com/questions/13167934/how-to-async-files-readalllines-and-await-for-results/52829926
-https://darchuk.net/2017/11/03/concurrenthashsett/
+* https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8
+* https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/default-interface-methods-versions
+* https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+* https://en.wikipedia.org/wiki/Breadth-first_search
+* https://github.com/dotnet/runtime/issues/2214
+* https://stackoverflow.com/questions/13167934/how-to-async-files-readalllines-and-await-for-results/52829926
+* https://darchuk.net/2017/11/03/concurrenthashsett/
