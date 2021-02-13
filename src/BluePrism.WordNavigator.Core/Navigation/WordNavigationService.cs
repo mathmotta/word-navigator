@@ -18,26 +18,26 @@ namespace BluePrism.WordNavigator.Core.Navigation
             _log = log;
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default)
+        public virtual async Task<Stack<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default)
         {
             ConcurrentHashSet<string> notKnown = source.ToConcurrentHashSet();
             return await Seek(start, target, notKnown, cancellationToken);
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default)
+        public virtual async Task<Stack<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default)
         {
             ConcurrentHashSet<string> notKnown = await source.ToConcurrentHashSet();
             return await Seek(start, target, notKnown, cancellationToken);
         }
 
-        public virtual async Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default)
+        public virtual async Task<Stack<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default)
         {
             source.Remove(start);
 
             _log.LogDebug("Started seeking with start {start} and target {target}.", start, target);
             var similarityGroups = new ConcurrentDictionary<string, ICollection<string>>();
             bool foundTarget = await SeekTarget(start, target, source, similarityGroups);
-            var researchResult = new List<ICollection<string>>();
+            var researchResult = new Stack<ICollection<string>>();
             if (!foundTarget)
             {
                 _log.LogDebug("Target was not found. No results to be shown.");
@@ -194,11 +194,11 @@ namespace BluePrism.WordNavigator.Core.Navigation
         /// <param name="similarityGroups">The similarity groups to find the shortest path from</param>
         /// <param name="researchResult">The result to write to</param>
         /// <param name="paths">The constructed paths to be added to the result</param>
-        public virtual void SeekAllShortestPaths(string start, string target, Dictionary<string, List<string>> similarityGroups, ICollection<ICollection<string>> researchResult, ICollection<string> paths)
+        public virtual void SeekAllShortestPaths(string start, string target, Dictionary<string, List<string>> similarityGroups, Stack<ICollection<string>> researchResult, ICollection<string> paths)
         {
             if (start.Equals(target))
             {
-                researchResult.Add(new List<string>(paths));
+                researchResult.Push(new List<string>(paths));
                 return;
             }
 
