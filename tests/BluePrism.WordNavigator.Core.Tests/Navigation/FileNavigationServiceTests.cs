@@ -23,12 +23,12 @@ namespace BluePrism.WordNavigator.Core.Tests.Navigation
         [Test]
         public void WriteContent_Success()
         {
-            var input = new List<ICollection<string>>();
+            var input = new Stack<ICollection<string>>();
             var inputResult = new List<string>();
             inputResult.Add("spin");
             inputResult.Add("spit");
             inputResult.Add("spot");
-            input.Add(inputResult);
+            input.Push(inputResult);
             var shortestPaths = ShortestPathsDTO.CreateFrom(input);
 
             _fileNavigationService.WriteContent(@"Resources\result.txt", shortestPaths);
@@ -38,12 +38,12 @@ namespace BluePrism.WordNavigator.Core.Tests.Navigation
         [Test]
         public async Task WriteContentAsync_Success()
         {
-            var input = new List<ICollection<string>>();
+            var input = new Stack<ICollection<string>>();
             var inputResult = new List<string>();
             inputResult.Add("spin");
             inputResult.Add("spit");
             inputResult.Add("spot");
-            input.Add(inputResult);
+            input.Push(inputResult);
             var shortestPaths = ShortestPathsDTO.CreateFrom(input);
 
             await _fileNavigationService.WriteContentAsync(@"Resources\result.txt", shortestPaths);

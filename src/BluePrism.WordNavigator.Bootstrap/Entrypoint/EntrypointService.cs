@@ -85,7 +85,7 @@ namespace BluePrism.WordNavigator.Bootstrap
             IAsyncEnumerable<string> content = _fileNavigationService.ReadContentAsync(sourcePath, cancellationToken);
 
             //_log.LogDebug("Seeking for {target}", options.Target);
-            ICollection<ICollection<string>> shortestPaths = await _wordNavigationService.Seek(options.Start, options.Target, content, cancellationToken);
+            Stack<ICollection<string>> shortestPaths = await _wordNavigationService.Seek(options.Start, options.Target, content, cancellationToken);
             var shortestPathsDto = ShortestPathsDTO.CreateFrom(shortestPaths);
 
 

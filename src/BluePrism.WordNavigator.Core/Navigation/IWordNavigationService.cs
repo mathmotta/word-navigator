@@ -20,7 +20,7 @@ namespace BluePrism.WordNavigator.Core.Navigation
         /// <param name="source">A concurrent hash set source, where all strings should be present</param>
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default);
+        Task<Stack<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default);
         /// <summary>
         /// Seeks for a given target string, running from a given start string. All similarities must be part of the given source.
         /// </summary>
@@ -29,7 +29,7 @@ namespace BluePrism.WordNavigator.Core.Navigation
         /// <param name="source">An asynchronous enumerable source, where all strings should be present</param>
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default);
+        Task<Stack<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default);
         /// <summary>
         /// Seeks for a given target string, running from a given start string. All similarities must be part of the given source.
         /// </summary>
@@ -38,6 +38,6 @@ namespace BluePrism.WordNavigator.Core.Navigation
         /// <param name="source">An enumerable source, where all strings should be present</param>
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default);
+        Task<Stack<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default);
     }
 }

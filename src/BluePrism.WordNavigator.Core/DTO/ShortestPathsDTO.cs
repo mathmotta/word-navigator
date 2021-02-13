@@ -10,14 +10,14 @@ namespace BluePrism.WordNavigator.Core.DTO
     /// </summary>
     public class ShortestPathsDTO
     {
-        private readonly ICollection<ICollection<string>> _navigationResults;
+        private readonly Stack<ICollection<string>> _navigationResults;
 
-        public static ShortestPathsDTO CreateFrom(ICollection<ICollection<string>> navigationResults)
+        public static ShortestPathsDTO CreateFrom(Stack<ICollection<string>> navigationResults)
         {
             return new ShortestPathsDTO(navigationResults);
         }
 
-        protected ShortestPathsDTO(ICollection<ICollection<string>> navigationResults)
+        protected ShortestPathsDTO(Stack<ICollection<string>> navigationResults)
         {
             _navigationResults = navigationResults;
         }

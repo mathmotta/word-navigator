@@ -33,13 +33,13 @@ namespace BluePrism.WordNavigator.Core.Tests
             var start = "same";
             var target = "cost";
 
-            ICollection<ICollection<string>> expectedResult = new List<ICollection<string>>();
+            var expectedResult = new Stack<ICollection<string>>();
             ICollection<string> path = new List<string>() { "same", "came", "case", "cast", "cost" };
-            expectedResult.Add(path);
+            expectedResult.Push(path);
 
 
             _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None).Result).Returns(expectedResult);
-            ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source);
+            Stack<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source);
 
 
             Assert.IsTrue(expectedResult.Count == 1);
@@ -54,13 +54,13 @@ namespace BluePrism.WordNavigator.Core.Tests
             var start = "same";
             var target = "cost";
 
-            ICollection<ICollection<string>> expectedResult = new List<ICollection<string>>();
+            var expectedResult = new Stack<ICollection<string>>();
             ICollection<string> path = new List<string>() { "same", "came", "case", "cast", "cost" };
-            expectedResult.Add(path);
+            expectedResult.Push(path);
 
 
             _wordNavigationService.Setup(w => w.Seek(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ConcurrentHashSet<string>>(), CancellationToken.None).Result).Returns(expectedResult);
-            ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source.ToAsyncEnumerable());
+            Stack<ICollection<string>> result = await _wordNavigationService.Object.Seek(start, target, source.ToAsyncEnumerable());
 
 
             Assert.IsTrue(expectedResult.Count == 1);
@@ -85,16 +85,16 @@ namespace BluePrism.WordNavigator.Core.Tests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Dictionary<string, List<string>>>(),
-                It.IsAny<ICollection<ICollection<string>>>(),
+                It.IsAny<Stack<ICollection<string>>>(),
                 It.IsAny<ICollection<string>>()));
 
-            ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(It.IsAny<string>(), It.IsAny<string>(), hashSet);
+            Stack<ICollection<string>> result = await _wordNavigationService.Object.Seek(It.IsAny<string>(), It.IsAny<string>(), hashSet);
 
             _wordNavigationService.Verify(w => w.SeekAllShortestPaths(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Dictionary<string, List<string>>>(),
-                It.IsAny<ICollection<ICollection<string>>>(),
+                It.IsAny<Stack<ICollection<string>>>(),
                 It.IsAny<ICollection<string>>()), Times.Once);
         }
 
@@ -115,16 +115,16 @@ namespace BluePrism.WordNavigator.Core.Tests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Dictionary<string, List<string>>>(),
-                It.IsAny<ICollection<ICollection<string>>>(),
+                It.IsAny<Stack<ICollection<string>>>(),
                 It.IsAny<ICollection<string>>()));
 
-            ICollection<ICollection<string>> result = await _wordNavigationService.Object.Seek(It.IsAny<string>(), It.IsAny<string>(), hashSet);
+            Stack<ICollection<string>> result = await _wordNavigationService.Object.Seek(It.IsAny<string>(), It.IsAny<string>(), hashSet);
 
             _wordNavigationService.Verify(w => w.SeekAllShortestPaths(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Dictionary<string, List<string>>>(),
-                It.IsAny<ICollection<ICollection<string>>>(),
+                It.IsAny<Stack<ICollection<string>>>(),
                 It.IsAny<ICollection<string>>()), Times.Never);
         }
 
@@ -343,7 +343,7 @@ namespace BluePrism.WordNavigator.Core.Tests
         {
             var group = "case";
             var target = "case";
-            var researchResult = new List<ICollection<string>>();
+            var researchResult = new Stack<ICollection<string>>();
 
             _wordNavigationService.Object.SeekAllShortestPaths(
                 group, 
@@ -360,7 +360,7 @@ namespace BluePrism.WordNavigator.Core.Tests
         {
             var group = "case";
             var target = "cage";
-            var researchResult = new List<ICollection<string>>();
+            var researchResult = new Stack<ICollection<string>>();
 
             _wordNavigationService.Object.SeekAllShortestPaths(
                 group,
@@ -387,7 +387,7 @@ namespace BluePrism.WordNavigator.Core.Tests
                 group,
                 target,
                 similarityGroups,
-                new List<ICollection<string>>(),
+                new Stack<ICollection<string>>(),
                 new List<string>());
 
             Assert.IsTrue(researchResult.Count == 1);

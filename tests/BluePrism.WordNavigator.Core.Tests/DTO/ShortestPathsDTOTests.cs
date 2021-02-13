@@ -9,7 +9,7 @@ namespace BluePrism.WordNavigator.Core.Tests.DTO
         [Test]
         public void ToString_Success()
         {
-            var input = new List<ICollection<string>>();
+            var input = new Stack<ICollection<string>>();
             var inputResult1 = new List<string>();
             inputResult1.Add("spin");
             inputResult1.Add("spit");
@@ -19,8 +19,8 @@ namespace BluePrism.WordNavigator.Core.Tests.DTO
             inputResult2.Add("spit");
             inputResult2.Add("spin");
 
-            input.Add(inputResult1);
-            input.Add(inputResult2);
+            input.Push(inputResult1);
+            input.Push(inputResult2);
 
             var shortestPaths = ShortestPathsDTO.CreateFrom(input).ToString();
 
