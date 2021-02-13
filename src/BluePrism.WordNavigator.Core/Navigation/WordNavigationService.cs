@@ -41,6 +41,7 @@ namespace BluePrism.WordNavigator.Core.Navigation
             if (!foundTarget)
             {
                 _log.LogDebug("Target was not found. No results to be shown.");
+                source.Dispose();
                 return researchResult;
             }
             _log.LogDebug("Target found. Getting all paths next.");

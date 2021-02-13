@@ -34,8 +34,6 @@ namespace BluePrism.WordNavigator.Bootstrap
         {
             try
             {
-
-
                 await Parser.Default.ParseArguments<Options>(args).WithParsedAsync(o => ExecuteApplication(o, cancellationToken));
             }
             catch (UnauthorizedAccessException uae)
@@ -90,6 +88,8 @@ namespace BluePrism.WordNavigator.Bootstrap
             ICollection<ICollection<string>> shortestPaths = await _wordNavigationService.Seek(options.Start, options.Target, content, cancellationToken);
             var shortestPathsDto = ShortestPathsDTO.CreateFrom(shortestPaths);
 
+
+
             string outputPath;
             if (options.Output != null && !string.IsNullOrEmpty(options.Output))
             {
@@ -105,7 +105,14 @@ namespace BluePrism.WordNavigator.Bootstrap
             await _fileNavigationService.WriteContentAsync(outputPath, shortestPathsDto, cancellationToken);
 
             stopWatch.Stop();
-            _log.LogInformation("All shortest paths:\r\n{shortestPathsDto}", shortestPathsDto.ToString());
+            if (shortestPaths.Count == 0)
+            {
+                _log.LogInformation("There are no paths for this word combination.");
+            }
+            else
+            {
+                _log.LogInformation("All shortest paths:\r\n{shortestPathsDto}", shortestPathsDto.ToString());
+            }
             _log.LogInformation("The operation took {seconds} seconds", Math.Round(stopWatch.Elapsed.TotalSeconds, 3));
 
         }
