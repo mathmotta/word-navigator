@@ -1,8 +1,9 @@
 ﻿using BluePrism.WordNavigator.Common.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace BluePrism.WordNavigator.Core
+namespace BluePrism.WordNavigator.Core.Navigation
 {
     /// <summary>
     /// <para>Exposes the default Word Navigation Service which specifies functionality to seek and find a <b>target</b> string from phased modifications of a <b>start</b> string.</para>
@@ -17,23 +18,26 @@ namespace BluePrism.WordNavigator.Core
         /// <param name="start">The start string</param>
         /// <param name="target">The target string</param>
         /// <param name="source">A concurrent hash set source, where all strings should be present</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source);
+        Task<ICollection<ICollection<string>>> Seek(string start, string target, ConcurrentHashSet<string> source, CancellationToken cancellationToken = default);
         /// <summary>
         /// Seeks for a given target string, running from a given start string. All similarities must be part of the given source.
         /// </summary>
         /// <param name="start">The start string</param>
         /// <param name="target">The target string</param>
         /// <param name="source">An asynchronous enumerable source, where all strings should be present</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source);
+        Task<ICollection<ICollection<string>>> Seek(string start, string target, IAsyncEnumerable<string> source, CancellationToken cancellationToken = default);
         /// <summary>
         /// Seeks for a given target string, running from a given start string. All similarities must be part of the given source.
         /// </summary>
         /// <param name="start">The start string</param>
         /// <param name="target">The target string</param>
         /// <param name="source">An enumerable source, where all strings should be present</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>A collection of shortest paths.</returns>
-        Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source);
+        Task<ICollection<ICollection<string>>> Seek(string start, string target, IEnumerable<string> source, CancellationToken cancellationToken = default);
     }
 }

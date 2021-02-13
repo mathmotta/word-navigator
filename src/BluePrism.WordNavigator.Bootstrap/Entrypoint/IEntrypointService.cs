@@ -1,4 +1,6 @@
 ﻿using BluePrism.WordNavigator.Common.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BluePrism.WordNavigator.Bootstrap
 {
@@ -11,6 +13,7 @@ namespace BluePrism.WordNavigator.Bootstrap
         /// Executes the main application streamline
         /// </summary>
         /// <param name="args">args to be used in the application</param>
-        void Execute(string[] args);
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
+        Task Execute(string[] args, CancellationToken cancellationToken = default);
     }
 }

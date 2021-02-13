@@ -4,13 +4,14 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Security;
+using BluePrism.WordNavigator.Common;
 
 namespace BluePrism.WordNavigator.Core.Navigation
 {
     /// <summary>
     /// Exposes functionality to save navigation results to text files.
     /// </summary>
-    public interface IFileNavigationService
+    public interface IFileNavigationService : IFileManagementService
     {
         /// <summary>
         /// Writes navigation results from <see cref="ShortestPathsDTO"/> to a file located at the given path.

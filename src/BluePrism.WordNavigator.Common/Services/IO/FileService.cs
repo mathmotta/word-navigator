@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Security;
+using System.Threading;
 
 namespace BluePrism.WordNavigator.Common.Services.IO
 {
@@ -38,7 +39,13 @@ namespace BluePrism.WordNavigator.Common.Services.IO
         public IEnumerable<string> ReadContent(string path)
         {
             if (path == null || string.IsNullOrEmpty(path))
+            {
                 throw new ArgumentNullException("Path to file is null or empty");
+            }
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("The file does not exist at the provided file path.");
+            }
             _log.LogDebug("Reading file {path}", path);
             return File.ReadAllLines(path);
 
@@ -49,11 +56,18 @@ namespace BluePrism.WordNavigator.Common.Services.IO
         /// </summary>
         /// <exception cref="ArgumentNullException" />
         /// <param name="path">The path to the file to be read</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
         /// <returns>An enumerable for asynchronous iteration over the content.</returns>
-        public async IAsyncEnumerable<string> ReadContentAsync(string path)
+        public async IAsyncEnumerable<string> ReadContentAsync(string path, CancellationToken cancellationToken = default)
         {
             if (path == null || string.IsNullOrEmpty(path))
+            {
                 throw new ArgumentNullException("Path to file is null or empty");
+            }
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("The file does not exist at the provided file path.");
+            }
 
             _log.LogDebug("Reading file {path}", path);
             var lines = await File.ReadAllLinesAsync(path);

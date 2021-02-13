@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace BluePrism.WordNavigator.Common.Extensions
 {
@@ -16,12 +17,12 @@ namespace BluePrism.WordNavigator.Common.Extensions
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static async IAsyncEnumerable<string> ReadLinesAsync(string path)
+        public static async IAsyncEnumerable<string> ReadLinesAsync(string path, CancellationToken cancellationToken = default)
         {
             using var fs = new FileStream(path, FileMode.Open, FileAccess.Read,
                 FileShare.Read, 32768, FileOptions.Asynchronous | FileOptions.SequentialScan);
             using var sr = new StreamReader(fs);
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var line = await sr.ReadLineAsync().ConfigureAwait(false);
                 if (line == null)

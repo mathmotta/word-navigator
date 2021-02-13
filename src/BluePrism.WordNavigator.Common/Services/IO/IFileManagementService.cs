@@ -1,5 +1,6 @@
 ﻿using BluePrism.WordNavigator.Common.Services;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace BluePrism.WordNavigator.Common
 {
@@ -18,7 +19,8 @@ namespace BluePrism.WordNavigator.Common
         /// Returns an enumerable of lines items from a provided content path that can be iterated asynchronously .
         /// </summary>
         /// <param name="path">The path to the file to be read</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/></param>
         /// <returns>An enumerable for asynchronous iteration over the content.</returns>
-        IAsyncEnumerable<string> ReadContentAsync(string path);
+        IAsyncEnumerable<string> ReadContentAsync(string path, CancellationToken cancellationToken = default);
     }
 }
