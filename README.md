@@ -58,9 +58,9 @@ The [appsettings.json](/src/BluePrism.WordNavigator.Bootstrap/appsettings.json) 
 
 Both __FileManagementService__ and __NavigationService__ implementations are configurable.
 
-For __FileManagementService__, the [FileService](/blob/main/src/BluePrism.WordNavigator.Common/Services/IO/FileService.cs) and the [OnDemandFileService](/blob/main/src/BluePrism.WordNavigator.Common/Services/IO/OnDemandFileService.cs) can be used. __FileService__ is a quicker service, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
+For __FileManagementService__, the [FileService](/src/BluePrism.WordNavigator.Common/Services/IO/FileService.cs) and the [OnDemandFileService](/src/BluePrism.WordNavigator.Common/Services/IO/OnDemandFileService.cs) can be used. __FileService__ is a quicker service, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
 
-For __NavigationService__, only one word navigation was implemented, [WordNavigatioNService](/blob/main/src/BluePrism.WordNavigator.Core/Navigation/WordNavigationService.cs). The setting is still optional for future extensions.
+For __NavigationService__, only one word navigation was implemented, [WordNavigatioNService](/src/BluePrism.WordNavigator.Core/Navigation/WordNavigationService.cs). The setting is still optional for future extensions.
 
 ## Optional WordLength
 
@@ -109,9 +109,9 @@ Try removing the WordLength setting and trying for maria -> deuce to see how big
 
 ## Custom extensions
 
-AsyncEnumerable is all nice and shiny, but it doesn't come with the same interfaces as the normal Enumerable, so I had to make my own! See the [AsyncEnumerableExtensions](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/AsyncEnumerableExtensions.cs) to see what kind of methods I made.
+AsyncEnumerable is all nice and shiny, but it doesn't come with the same interfaces as the normal Enumerable, so I had to make my own! See the [AsyncEnumerableExtensions](/src/BluePrism.WordNavigator.Common/Extensions/AsyncEnumerableExtensions.cs) to see what kind of methods I made.
 
-A special [ConcurrentHashMap(T)](/blob/main/src/BluePrism.WordNavigator.Common/Concurrent/ConcurrentHashSet.cs) and extensions for [Collections](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/CollectionExtensions.cs), [Files](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/FileExtensions.cs), [Enumerables](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/EnumerableExtensions.cs) and [ConcurrentDictionaries](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/ConcurrentDictionaryExtensions.cs) were also created
+A special [ConcurrentHashMap(T)](/src/BluePrism.WordNavigator.Common/Concurrent/ConcurrentHashSet.cs) and extensions for [Collections](/src/BluePrism.WordNavigator.Common/Extensions/CollectionExtensions.cs), [Files](/src/BluePrism.WordNavigator.Common/Extensions/FileExtensions.cs), [Enumerables](/src/BluePrism.WordNavigator.Common/Extensions/EnumerableExtensions.cs) and [ConcurrentDictionaries](/src/BluePrism.WordNavigator.Common/Extensions/ConcurrentDictionaryExtensions.cs) were also created
 
 ## Design Patterns
 
@@ -141,3 +141,14 @@ Factory is indirectly used with Microsoft's dependency injection framework as we
 * Although this is all logical, this tree-shaped solution is well used on any problem that requires this pattern of repetition. The implemented solution was based on the Breadth First Search algorithm, although the implementation itself is quite different as it doesn't create an intermediate state between two groups - That is very time consuming to process!
 * The last step is to run a recursive method to create the shortest paths between the groups.
 * Yes, plural! The shortest path is about its lenght, but there are many valid results with the same shortest lenght.
+
+# References
+
+
+https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8
+https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/default-interface-methods-versions
+https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+https://en.wikipedia.org/wiki/Breadth-first_search
+https://github.com/dotnet/runtime/issues/2214
+https://stackoverflow.com/questions/13167934/how-to-async-files-readalllines-and-await-for-results/52829926
+https://darchuk.net/2017/11/03/concurrenthashsett/
