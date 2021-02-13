@@ -58,9 +58,9 @@ The [appsettings.json](/src/BluePrism.WordNavigator.Bootstrap/appsettings.json) 
 
 Both __FileManagementService__ and __NavigationService__ implementations are configurable.
 
-For __FileManagementService__, the [FileService]() and the [OnDemandFileService]() can be used. __FileService__ is a quicker service, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
+For __FileManagementService__, the [FileService](/blob/main/src/BluePrism.WordNavigator.Common/Services/IO/FileService.cs) and the [OnDemandFileService](/blob/main/src/BluePrism.WordNavigator.Common/Services/IO/OnDemandFileService.cs) can be used. __FileService__ is a quicker service, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
 
-For __NavigationService__, only one word navigation was implemented, [WordNavigatioNService](). The setting is still optional for future extensions.
+For __NavigationService__, only one word navigation was implemented, [WordNavigatioNService](/blob/main/src/BluePrism.WordNavigator.Core/Navigation/WordNavigationService.cs). The setting is still optional for future extensions.
 
 ## Optional WordLength
 
@@ -95,7 +95,7 @@ The application uses latest C# 8.0 features such as AsyncEnumerables and default
 
 Most methods were made with async/await and multithreading. It may not be a huge gain at this level of workloads, but the decision was made to increase the application's scalability.
 
-As a bonus, workloads can be safely cancelled by pressing CTRL+C! The CancellationToken is triggered and verified between each path iteration. Cancelling will dispose the loaded lines and return an empty result.
+As a bonus, workloads can be safely cancelled by pressing __CTRL+C__! The CancellationToken is triggered and verified between each path iteration. Cancelling will dispose the loaded lines and return an empty result.
 
 ## Test-Driven Development
 
@@ -109,9 +109,9 @@ Try removing the WordLength setting and trying for maria -> deuce to see how big
 
 ## Custom extensions
 
-AsyncEnumerable is all nice and shiny, but it doesn't come with the same interfaces as the normal Enumerable, so I had to make my own! See the [AsyncEnumerableExtensions]() to see what kind of methods I made.
+AsyncEnumerable is all nice and shiny, but it doesn't come with the same interfaces as the normal Enumerable, so I had to make my own! See the [AsyncEnumerableExtensions](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/AsyncEnumerableExtensions.cs) to see what kind of methods I made.
 
-A special [ConcurrentHashMap<T>]() and extensions for [Collections](), [Files], [Enumerables] and [ConcurrentDictionaries] were also created
+A special [ConcurrentHashMap(T)](/blob/main/src/BluePrism.WordNavigator.Common/Concurrent/ConcurrentHashSet.cs) and extensions for [Collections](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/CollectionExtensions.cs), [Files](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/FileExtensions.cs), [Enumerables](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/EnumerableExtensions.cs) and [ConcurrentDictionaries](/blob/main/src/BluePrism.WordNavigator.Common/Extensions/ConcurrentDictionaryExtensions.cs) were also created
 
 ## Design Patterns
 
@@ -120,7 +120,7 @@ Factory is indirectly used with Microsoft's dependency injection framework as we
 
 * Methods, Classes and services has a single purpose to encapsulate functionality; 
 * Classes are extensible and modifyable where it makes sense;
-* Compatible subclasses were used, no class was forced to implement ;interface methods they don't have use for;
+* Compatible subclasses were used, no class was forced to implement interface methods they don't have use for;
 * Classes in the whole application depend on abstraction, making heavy use of dependency injection;
 
 ## Interface dependencies, not implementation
