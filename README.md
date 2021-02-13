@@ -58,13 +58,13 @@ The [appsettings.json](/src/BluePrism.WordNavigator.Bootstrap/appsettings.json) 
 
 Both __FileManagementService__ and __NavigationService__ implementations are configurable.
 
-For __FileManagementService__, the [FileService](/src/BluePrism.WordNavigator.Common/Services/IO/FileService.cs) and the [OnDemandFileService](/src/BluePrism.WordNavigator.Common/Services/IO/OnDemandFileService.cs) can be used. __FileService__ is a quicker service, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
+For __FileManagementService__, the [FileService](/src/BluePrism.WordNavigator.Common/Services/IO/FileService.cs) and the [OnDemandFileService](/src/BluePrism.WordNavigator.Common/Services/IO/OnDemandFileService.cs) can be used. __FileService__ is a quicker, more memory costly approach, better when dealing with small dictionaries as it loads all lines in memory. However it is not recommended for files that are too big (e.g. 100mb+), in such a case, the __OnDemandFileService__ is a better and much safer apporach as lines are lazily loaded.
 
 For __NavigationService__, only one word navigation was implemented, [WordNavigatioNService](/src/BluePrism.WordNavigator.Core/Navigation/WordNavigationService.cs). The setting is still optional for future extensions.
 
 ## Optional WordLength
 
-The WordLength setting is there because of the requirement restriction, but the application runs with any two words of same length!
+The WordLength setting is there because of the requirement restriction, but the application runs with any two words of same length! The WordLength setting can be removed and Word Navigator will work with any two words of same length!
 
 ## Log Settings
 
@@ -129,18 +129,16 @@ Factory is indirectly used with Microsoft's dependency injection framework as we
 
 # How the Magic Happens
 
-* Get the dictionary content and store in a ConcurrentHashSet
-     * The order doesn't matter so we might as well get a bit of performance out of this, right?
-* Then create groups of similarities, that is represented by a ConcurrentDictionary with a string key for a group and a List of strings for the similarities
+* Get the dictionary content and store in a [ConcurrentHashSet](/src/BluePrism.WordNavigator.Common/Concurrent/ConcurrentHashSet.cs). The order doesn't matter so we might as well get a bit of performance out of this.
+* Create groups of similarities, that is represented by a ConcurrentDictionary with a string key for a group and a List of strings for the similarities
 * Create a list of paths and add the start word to it, this will be our entrypoint
 * Iterate over the paths, getting the first element for each element of the paths list and then removing it from the list as we'll create a group for that word.
 * Iterate over each index of that word, for each index, iterate for each letter in the alphabet, making a new similarity for each new letter
-* If the similarity is not even a word, ignore it
-* If, however, it is a word, we have a new similarity! Add that similarity to that group
-* Add the similarity to a group of already known words, we don't want to re-add them in the future, and also to the list of paths, we will have to iterate over each similarity as well so we find similarities of similarities
-* Although this is all logical, this tree-shaped solution is well used on any problem that requires this pattern of repetition. The implemented solution was based on the Breadth First Search algorithm, although the implementation itself is quite different as it doesn't create an intermediate state between two groups - That is very time consuming to process!
-* The last step is to run a recursive method to create the shortest paths between the groups.
-* Yes, plural! The shortest path is about its lenght, but there are many valid results with the same shortest lenght.
+* If the similarity is not even a word, ignore it, otherwise we have a new similarity! Add that similarity to the word group
+* Also add the similarity to a group of already known words, we don't want to re-add them in the future, and also to the list of paths, we will have to iterate over each similarity as well so we find similarities of similarities
+* Although this is all logical, this tree-shaped solution is well used on any problem that requires this pattern of repetition. The implemented solution was based on the Breadth First Search algorithm. The implementation itself is quite different though, as it doesn't create an intermediate state between two groups (e.g. between dig and dug we can create d\*g. That is very process intensive and thus time consuming!)
+* The last step is to run a recursive method to create the __shortest paths__ between the groups.
+* __Shortest paths indeed!__ The shortest path is about its lenght, but there are many valid results with the same shortest lenght thus the result is a list of paths.
 
 # References
 
