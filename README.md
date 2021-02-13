@@ -3,7 +3,7 @@ Navigate through words and find your target!
 
 # Running
 
-* Download the latest release in the release page;
+* Download the latest release in the [release page](https://github.com/mathmotta/word-navigator/releases/tag/1.0.0)
 * Unzip the file in any directory;
 * Open a terminal an navigate to the directory the application was unzipped
 
