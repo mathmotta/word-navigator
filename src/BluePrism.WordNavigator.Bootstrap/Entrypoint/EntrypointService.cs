@@ -66,7 +66,7 @@ namespace BluePrism.WordNavigator.Bootstrap
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             var wordLength = _config.GetSection("WordLength");
-            if (!options.Start.Length.Equals(int.Parse(wordLength.Value)))
+            if (wordLength.Value != null && !options.Start.Length.Equals(int.Parse(wordLength.Value)))
             {
                 throw new LengthNotPermittedException(string.Format("Length of word {0} is different than the allowed value of {1}", options.Start, wordLength.Value));
             }
